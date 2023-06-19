@@ -9,16 +9,16 @@ services:
       - bundle:/usr/local/bundle
     environment:
       - RAILS_ENV=development
-      - DB_DATABASE_HOST=mysql
-      - DB_DATABASE_USER=root
-      - DB_DATABASE_PASSWORD=
-      - DB_DATABASE_NAME= share_post
     depends_on:
       - mysql
+      - redis
+      - sidekiq
     links:
       - mysql
     ports:
       - '3000:3000'
+      - '1234:1234'
+      - '26162:26162'
     tmpfs:
       - /tmp
     stdin_open: true
@@ -33,6 +33,27 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     ports:
       - '4306:3306'
+  redis:
+    image: redis:7.0
+    command: redis-server --appendonly yes
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+    environment:
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - mysql
+      - redis
+    links:
+      - mysql
 volumes:
   bundle:
   mysql:
+  redis:

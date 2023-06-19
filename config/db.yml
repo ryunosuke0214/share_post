@@ -1,0 +1,9 @@
+default: &default
+  database_name: 'share_post'
+development:
+  <<: *default
+test:
+  <<: *default
+  database_name: 'share_post_test'
+production:
+  <<: *default

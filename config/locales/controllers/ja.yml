@@ -1,0 +1,8 @@
+ja:
+  articles_controller:
+    create:
+      flash_success: "記事を新規作成しました。"
+    update:
+      flash_success: "記事を更新しました。"
+    destroy:
+      flash_success: "記事を削除しました。"

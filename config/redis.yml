@@ -1,0 +1,10 @@
+default: &default
+  redis_host: ''
+development:
+  <<: *default
+  redis_host: 'redis:6379'
+test:
+  <<: *default
+  redis_host: 'redis:6379'
+production:
+  <<: *default

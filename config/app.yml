@@ -1,0 +1,11 @@
+default: &default
+development:
+  default_url_host: 'localhost'
+  default_url_port: 3000
+  <<: *default
+test:
+  default_url_host: 'localhost'
+  default_url_port: 3000
+  <<: *default
+production:
+  <<: *default

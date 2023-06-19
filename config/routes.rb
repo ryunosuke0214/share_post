@@ -1,6 +1,13 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+  end
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  mount Sidekiq::Web, at: '/sidekiq'
+
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+  resources :articles, only: %i[index show new create] 
 end

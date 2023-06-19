@@ -1,0 +1,13 @@
+default: &default
+  delivery_method: ''
+  raise_delivery_errors: true
+  default_url_options: {}
+  smtp_setting: {}
+development:
+  <<: *default
+  delivery_method: 'letter_opener_web'
+  default_url_options: { host: 'localhost', port: 3000 }
+test:
+  <<: *default
+production:
+  <<: *default
